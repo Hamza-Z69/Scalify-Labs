@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 340" fill="none">
+  <!-- SCALIFY -->
+  <text x="28" y="120" font-family="'Plus Jakarta Sans', 'Arial Black', sans-serif" font-weight="900" font-size="108" letter-spacing="-3" fill="#E5D5C0" font-style="italic">
+    <tspan>SCAL</tspan><tspan fill="#E8862A">i</tspan><tspan>FY</tspan>
+  </text>
+  <!-- LABS -->
+  <text x="28" y="220" font-family="'Plus Jakarta Sans', 'Arial Black', sans-serif" font-weight="900" font-size="108" letter-spacing="-3" fill="#E5D5C0" font-style="italic">
+    LABS
+  </text>
+  <!-- FRANCHISE GROWTH AGENCY -->
+  <text x="36" y="268" font-family="'Plus Jakarta Sans', 'DM Sans', sans-serif" font-weight="600" font-size="19" letter-spacing="5.5" fill="#E8862A">
+    FRANCHISE
+  </text>
+  <text x="14" y="294" font-family="'Plus Jakarta Sans', 'DM Sans', sans-serif" font-weight="600" font-size="19" letter-spacing="5.5" fill="#E8862A">
+    GROWTH AGENCY
+  </text>
+</svg>
