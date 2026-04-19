@@ -117,7 +117,7 @@ function Nav({ t, lang, setLang }: { t: SiteContent; lang: string; setLang: (l: 
           <a href="#franchise" style={link} className="nav-link">{t.nav.franchise}</a>
           <a href="#journal" style={link} className="nav-link">{t.nav.journal}</a>
           <a href="#contact" style={link} className="nav-link">{t.nav.contact}</a>
-          <div style={{ display: "flex", gap: 2, fontFamily: "var(--font-mono)", fontSize: 11, border: "1px solid var(--rule)", borderRadius: 999, padding: 2 }}>
+          <div className="nav-lang" style={{ display: "flex", gap: 2, fontFamily: "var(--font-mono)", fontSize: 11, border: "1px solid var(--rule)", borderRadius: 999, padding: 2 }}>
             {(["fr", "en"] as const).map(l => (
               <button key={l} onClick={() => setLang(l)} style={{ padding: "4px 9px", border: 0, borderRadius: 999, cursor: "pointer", background: lang === l ? "var(--fg)" : "transparent", color: lang === l ? "var(--bg)" : "var(--muted)", fontFamily: "inherit", fontSize: "inherit", textTransform: "uppercase", letterSpacing: "0.08em" }}>{l}</button>
             ))}
@@ -135,8 +135,8 @@ function Nav({ t, lang, setLang }: { t: SiteContent; lang: string; setLang: (l: 
 function HeroA({ t, title, sub }: { t: SiteContent; title: string; sub: string }) {
   return (
     <div style={{ textAlign: "center", maxWidth: 1200, margin: "0 auto", position: "relative", paddingTop: 12 }}>
-      <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, width: 28, height: 28, borderTop: "1px solid var(--rule)", borderLeft: "1px solid var(--rule)" }} />
-      <div aria-hidden="true" style={{ position: "absolute", top: 0, right: 0, width: 28, height: 28, borderTop: "1px solid var(--rule)", borderRight: "1px solid var(--rule)" }} />
+      <div aria-hidden="true" className="hero-corner" style={{ position: "absolute", top: 0, left: 0, width: 28, height: 28, borderTop: "1px solid var(--rule)", borderLeft: "1px solid var(--rule)" }} />
+      <div aria-hidden="true" className="hero-corner" style={{ position: "absolute", top: 0, right: 0, width: 28, height: 28, borderTop: "1px solid var(--rule)", borderRight: "1px solid var(--rule)" }} />
       <div style={{ display: "inline-flex", alignItems: "center", gap: 14, fontFamily: "var(--font-mono)", fontSize: 11, textTransform: "uppercase", letterSpacing: "0.16em", color: "var(--muted)", marginBottom: 44 }}>
         <span>{"\u00a7"} 01</span>
         <span style={{ width: 24, height: 1, background: "var(--rule)" }} />
@@ -150,13 +150,13 @@ function HeroA({ t, title, sub }: { t: SiteContent; title: string; sub: string }
           </Fragment>
         ))}
       </h1>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 14, margin: "44px auto 0", opacity: 0.5 }}>
+      <div className="hero-ornament" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 14, margin: "44px auto 0", opacity: 0.5 }}>
         <span style={{ width: 80, height: 1, background: "var(--rule)" }} />
         <span style={{ width: 6, height: 6, border: "1px solid var(--accent)", transform: "rotate(45deg)" }} />
         <span style={{ width: 80, height: 1, background: "var(--rule)" }} />
       </div>
       <p style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(16px, 1.35vw, 19px)", lineHeight: 1.6, maxWidth: "58ch", margin: "36px auto 0", opacity: 0.82, textWrap: "pretty" as never }}>{sub}</p>
-      <div style={{ display: "flex", justifyContent: "center", gap: 14, marginTop: 44, flexWrap: "wrap" }}>
+      <div className="hero-cta-row" style={{ display: "flex", justifyContent: "center", gap: 14, marginTop: 44, flexWrap: "wrap" }}>
         <a href="#contact" style={{ background: "var(--fg)", color: "var(--bg)", padding: "16px 28px", borderRadius: 999, textDecoration: "none", fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: 500 }}>{t.hero.cta_primary} →</a>
         <a href="#process" style={{ border: "1px solid var(--rule)", color: "var(--fg)", padding: "16px 24px", borderRadius: 999, textDecoration: "none", fontFamily: "var(--font-sans)", fontSize: 15 }}>{t.hero.cta_secondary}</a>
       </div>
@@ -164,8 +164,8 @@ function HeroA({ t, title, sub }: { t: SiteContent; title: string; sub: string }
         <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--accent)", boxShadow: "0 0 0 3px color-mix(in oklab, var(--accent), transparent 78%)", animation: "pulse 2.2s ease-in-out infinite" }} />
         <span>{t.hero.availability}</span>
       </div>
-      <div aria-hidden="true" style={{ position: "absolute", bottom: -24, left: 0, width: 28, height: 28, borderBottom: "1px solid var(--rule)", borderLeft: "1px solid var(--rule)" }} />
-      <div aria-hidden="true" style={{ position: "absolute", bottom: -24, right: 0, width: 28, height: 28, borderBottom: "1px solid var(--rule)", borderRight: "1px solid var(--rule)" }} />
+      <div aria-hidden="true" className="hero-corner" style={{ position: "absolute", bottom: -24, left: 0, width: 28, height: 28, borderBottom: "1px solid var(--rule)", borderLeft: "1px solid var(--rule)" }} />
+      <div aria-hidden="true" className="hero-corner" style={{ position: "absolute", bottom: -24, right: 0, width: 28, height: 28, borderBottom: "1px solid var(--rule)", borderRight: "1px solid var(--rule)" }} />
     </div>
   );
 }
@@ -246,7 +246,7 @@ function Hero({ t, variant }: { t: SiteContent; variant: string }) {
   const title = variant === "a" ? t.hero.title_a : variant === "b" ? t.hero.title_b : t.hero.title_c;
   const sub = variant === "a" ? t.hero.sub_a : variant === "b" ? t.hero.sub_b : t.hero.sub_c;
   return (
-    <section id="top" style={{ padding: "calc(var(--pad) * 9) var(--pad-x) calc(var(--pad) * 3)", minHeight: "92vh", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", overflow: "hidden" }}>
+    <section id="top" className="hero-section" style={{ padding: "calc(var(--pad) * 9) var(--pad-x) calc(var(--pad) * 3)", minHeight: "92vh", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", overflow: "hidden" }}>
       <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: "linear-gradient(to right, var(--rule) 1px, transparent 1px)", backgroundSize: "calc(100% / 12) 100%", opacity: 0.25 }} />
       <div style={{ maxWidth: 1440, margin: "0 auto", width: "100%", position: "relative" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "calc(var(--pad) * 2.5)" }}>
@@ -853,7 +853,7 @@ function FooterSection({ t }: { t: SiteContent }) {
           </div>
         </div>
       </div>
-      <div style={{ maxWidth: 1440, margin: "72px auto 0", paddingTop: 24, borderTop: "1px solid var(--rule)", display: "flex", justifyContent: "space-between", fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--muted)", letterSpacing: "0.08em" }}>
+      <div className="footer-bottom" style={{ maxWidth: 1440, margin: "72px auto 0", paddingTop: 24, borderTop: "1px solid var(--rule)", display: "flex", justifyContent: "space-between", fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--muted)", letterSpacing: "0.08em" }}>
         <span>{t.footer.copy}</span>
         <span>v2026.04.19</span>
       </div>
@@ -971,92 +971,120 @@ export default function Home() {
           50% { opacity: 0.35; }
         }
 
+        /* ── TABLET ── */
         @media (max-width: 960px) {
           :root { --pad-x: 24px; }
           .nav-link { display: none !important; }
+          .nav-lang { display: none !important; }
+          .services-grid { grid-template-columns: 1fr !important; }
+          .results-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .franchise-pillars { grid-template-columns: repeat(2, 1fr) !important; }
         }
 
+        /* ── MOBILE ── */
         @media (max-width: 768px) {
-          :root { --pad-x: 18px; }
+          :root { --pad-x: 16px; --pad: 10px; }
 
-          /* 2 — Hero split (variant B) */
+          /* Nav */
+          .nav-cta-text { display: none; }
+
+          /* Hero */
           .hero-split { grid-template-columns: 1fr !important; gap: 32px !important; }
+          .hero-section { min-height: 85vh !important; padding-top: 100px !important; padding-bottom: 40px !important; }
+          .hero-corner { display: none !important; }
+          .hero-eyebrow-row { flex-direction: column !important; align-items: flex-start !important; gap: 8px !important; }
+          .hero-cta-row { flex-direction: column !important; gap: 10px !important; }
+          .hero-cta-row a { width: 100%; text-align: center; justify-content: center; }
+          .hero-ornament { margin: 28px auto 0 !important; }
+          .hero-ornament span:first-child,
+          .hero-ornament span:last-child { width: 40px !important; }
 
-          /* 3 — Metrics */
-          .metrics-grid { grid-template-columns: repeat(2, 1fr) !important; }
-          .metrics-grid > div { border-right: none !important; padding: 24px 0 !important; }
-          .metrics-grid > div:nth-child(-n+2) { border-bottom: 1px solid var(--creamRule); }
+          /* Metrics */
+          .metrics-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 0 !important; }
+          .metrics-grid > div { border-right: none !important; padding: 20px 16px !important; }
 
-          /* 4, 7, 9, 11 — Section headers (2-col → stack) */
+          /* Section headers */
           .section-header-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+          .section-header-grid > p { font-size: 14px !important; }
 
-          /* 5 — Services cards */
+          /* Services */
           .services-grid { grid-template-columns: 1fr !important; }
+          .services-grid > article { min-height: auto !important; padding: 24px 20px 20px !important; }
 
-          /* 6 — Anatomy */
-          .anatomy-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+          /* Anatomy */
+          .anatomy-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
           .anatomy-grid > div:last-child { position: static !important; }
+          .anatomy-layer { padding: 16px 20px !important; }
 
-          /* 8 — Process steps */
-          .process-step { grid-template-columns: 56px 1fr !important; gap: 16px !important; }
-          .process-step > div:nth-child(3) { grid-column: 2 / -1; }
-          .process-step > div:nth-child(4) { grid-column: 2 / -1; }
-
-          /* 10 — Results pillars */
-          .results-grid { grid-template-columns: repeat(2, 1fr) !important; }
-
-          /* 12 — Franchise pillars */
-          .franchise-pillars { grid-template-columns: repeat(2, 1fr) !important; }
-
-          /* 13 — Franchise network rows */
-          .network-row { grid-template-columns: 1fr 1fr !important; gap: 8px 16px !important; padding: 18px 0 !important; }
-          .network-row > div:nth-child(3),
-          .network-row > div:nth-child(4) { text-align: left !important; }
-
-          /* 14 — Franchise network header */
-          .network-header { grid-template-columns: 1fr !important; gap: 20px !important; }
-
-          /* 15 — Journal cards */
-          .journal-grid { grid-template-columns: 1fr !important; }
-
-          /* 16 — FAQ */
-          .faq-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
-          .faq-grid > div:first-child { position: static !important; }
-
-          /* 17 — Before/After header & rows */
-          .ba-header { grid-template-columns: 1fr !important; gap: 16px !important; }
-          .ba-row { grid-template-columns: 1fr !important; gap: 12px !important; padding: 20px 16px !important; }
-          .ba-row > div:last-child { padding-left: 0 !important; border-left: none !important; }
-
-          /* 18 — Contact */
-          .contact-grid { grid-template-columns: 1fr !important; gap: 28px !important; }
-
-          /* 19 — Contact form fields */
-          .form-field { grid-template-columns: 1fr !important; gap: 8px !important; padding: 14px 16px !important; }
-
-          /* 20 — Footer */
-          .footer-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
-
-          /* Touch targets — minimum 44px */
-          .faq-grid button { min-height: 48px; }
-          a[href="#contact"], button[type="submit"] { min-height: 44px; }
-
-          /* Modals — full-screen on mobile */
-          .modal-overlay { padding: 16px !important; align-items: flex-start !important; }
-          .modal-overlay > article,
-          .modal-overlay > div { border-radius: 12px !important; padding: 28px 20px 32px !important; max-height: 92vh !important; overflow-y: auto !important; }
-
-          /* Legal modal adjustments */
-          .legal-modal-inner { max-height: 94vh !important; }
-          .legal-modal-header { padding: 20px 20px !important; }
-          .legal-modal-body { padding: 24px 20px 28px !important; }
-          .legal-modal-footer { padding: 14px 20px !important; }
-
-          /* Tweaks panel — full width on mobile */
-          .tweaks-panel { left: 16px !important; right: 16px !important; width: auto !important; bottom: 16px !important; }
-
-          /* Process timeline line hidden on mobile */
+          /* Process */
           .process-timeline-line { display: none !important; }
+          .process-step { grid-template-columns: 1fr !important; gap: 12px !important; padding: 24px 0 !important; }
+          .process-step > div:first-child { display: flex; align-items: center; gap: 16px; }
+          .process-step > div:nth-child(2) { display: none; }
+          .process-step > div:nth-child(3) { grid-column: 1; }
+          .process-step > div:nth-child(4) { grid-column: 1; margin-top: 8px; }
+
+          /* Results */
+          .results-grid { grid-template-columns: 1fr !important; }
+          .results-grid > article { min-height: auto !important; padding: 28px 20px 24px !important; }
+
+          /* Franchise */
+          .franchise-pillars { grid-template-columns: 1fr !important; }
+          .network-header { grid-template-columns: 1fr !important; gap: 16px !important; }
+          .network-header > p { border-left: none !important; padding-left: 0 !important; }
+          .network-row { grid-template-columns: 1fr !important; gap: 4px !important; padding: 16px 0 !important; }
+
+          /* Journal */
+          .journal-grid { grid-template-columns: 1fr !important; }
+          .journal-grid > a { min-height: auto !important; padding: 20px !important; }
+
+          /* FAQ */
+          .faq-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+          .faq-grid > div:first-child { position: static !important; }
+          .faq-grid button { min-height: 52px; font-size: 18px !important; }
+
+          /* Before/After */
+          .ba-header { grid-template-columns: 1fr !important; gap: 16px !important; }
+          .ba-row { grid-template-columns: 1fr !important; gap: 0 !important; padding: 16px !important; }
+          .ba-row > div { padding: 12px 0 !important; border-left: none !important; border-bottom: 1px solid color-mix(in oklab, var(--bg), transparent 85%); }
+          .ba-row > div:last-child { border-bottom: none; }
+
+          /* Contact */
+          .contact-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+          .form-field { grid-template-columns: 1fr !important; gap: 6px !important; padding: 12px 16px !important; }
+          .form-field > span { padding-top: 0 !important; font-size: 10px !important; }
+
+          /* Footer */
+          .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 28px !important; }
+          .footer-bottom { flex-direction: column !important; gap: 8px !important; text-align: center !important; }
+
+          /* Modals */
+          .modal-overlay { padding: 12px !important; align-items: flex-start !important; }
+          .modal-overlay > article,
+          .modal-overlay > div { border-radius: 14px !important; padding: 24px 18px 28px !important; max-height: 94vh !important; overflow-y: auto !important; }
+          .modal-overlay h1 { font-size: 24px !important; }
+
+          /* Legal modals */
+          .legal-modal-inner { max-height: 96vh !important; }
+          .legal-modal-header { padding: 18px !important; }
+          .legal-modal-header > div > div:last-child { font-size: 22px !important; }
+          .legal-modal-body { padding: 20px 18px !important; }
+
+          /* Tweaks */
+          .tweaks-panel { left: 12px !important; right: 12px !important; width: auto !important; bottom: 12px !important; max-height: 70vh !important; overflow-y: auto !important; }
+
+          /* Global touch targets */
+          button, a[href] { min-height: 44px; }
+
+          /* Section padding reduction */
+          section { padding-top: calc(var(--pad) * 3) !important; padding-bottom: calc(var(--pad) * 3) !important; }
+        }
+
+        /* ── SMALL MOBILE (iPhone SE etc) ── */
+        @media (max-width: 400px) {
+          :root { --pad-x: 14px; }
+          .footer-grid { grid-template-columns: 1fr !important; }
+          .metrics-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
 
