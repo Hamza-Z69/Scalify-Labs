@@ -100,32 +100,72 @@ function Sparkline({ data }: { data: number[] }) {
    ═══════════════════════════════════════════════════════ */
 function Nav({ t, lang, setLang }: { t: SiteContent; lang: string; setLang: (l: string) => void }) {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
   const link: CSSProperties = { color: "var(--fg)", textDecoration: "none", fontFamily: "var(--font-sans)", fontSize: 13.5, opacity: 0.8, transition: "opacity .2s" };
+  const mobileLink: CSSProperties = { color: "var(--fg)", textDecoration: "none", fontFamily: "var(--font-display)", fontSize: 28, lineHeight: 1.3, display: "block", padding: "8px 0" };
   return (
-    <header style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 40, padding: "18px var(--pad-x)", backdropFilter: scrolled ? "blur(14px)" : "none", WebkitBackdropFilter: scrolled ? "blur(14px)" : "none", background: scrolled ? "color-mix(in oklab, var(--bg), transparent 25%)" : "transparent", borderBottom: scrolled ? "1px solid var(--rule)" : "1px solid transparent", transition: "all .25s ease" }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", maxWidth: 1440, margin: "0 auto" }}>
-        <a href="#top" style={{ color: "var(--fg)", textDecoration: "none" }}><Logo /></a>
-        <nav style={{ display: "flex", alignItems: "center", gap: 28 }}>
-          <a href="#services" style={link} className="nav-link">{t.nav.services}</a>
-          <a href="#process" style={link} className="nav-link">{t.nav.process}</a>
-          <a href="#results" style={link} className="nav-link">{t.nav.work}</a>
-          <a href="#franchise" style={link} className="nav-link">{t.nav.franchise}</a>
-          <a href="#journal" style={link} className="nav-link">{t.nav.journal}</a>
-          <a href="#contact" style={link} className="nav-link">{t.nav.contact}</a>
-          <div className="nav-lang" style={{ display: "flex", gap: 2, fontFamily: "var(--font-mono)", fontSize: 11, border: "1px solid var(--rule)", borderRadius: 999, padding: 2 }}>
-            {(["fr", "en"] as const).map(l => (
-              <button key={l} onClick={() => setLang(l)} style={{ padding: "4px 9px", border: 0, borderRadius: 999, cursor: "pointer", background: lang === l ? "var(--fg)" : "transparent", color: lang === l ? "var(--bg)" : "var(--muted)", fontFamily: "inherit", fontSize: "inherit", textTransform: "uppercase", letterSpacing: "0.08em" }}>{l}</button>
-            ))}
+    <>
+      <header style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 40, padding: "18px var(--pad-x)", backdropFilter: scrolled || menuOpen ? "blur(14px)" : "none", WebkitBackdropFilter: scrolled || menuOpen ? "blur(14px)" : "none", background: scrolled || menuOpen ? "color-mix(in oklab, var(--bg), transparent 15%)" : "transparent", borderBottom: scrolled ? "1px solid var(--rule)" : "1px solid transparent", transition: "all .25s ease" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", maxWidth: 1440, margin: "0 auto" }}>
+          <a href="#top" style={{ color: "var(--fg)", textDecoration: "none" }} onClick={() => setMenuOpen(false)}><Logo /></a>
+          {/* Desktop nav */}
+          <nav className="nav-desktop" style={{ display: "flex", alignItems: "center", gap: 28 }}>
+            <a href="#services" style={link}>{t.nav.services}</a>
+            <a href="#process" style={link}>{t.nav.process}</a>
+            <a href="#results" style={link}>{t.nav.work}</a>
+            <a href="#franchise" style={link}>{t.nav.franchise}</a>
+            <a href="#journal" style={link}>{t.nav.journal}</a>
+            <a href="#contact" style={link}>{t.nav.contact}</a>
+            <div style={{ display: "flex", gap: 2, fontFamily: "var(--font-mono)", fontSize: 11, border: "1px solid var(--rule)", borderRadius: 999, padding: 2 }}>
+              {(["fr", "en"] as const).map(l => (
+                <button key={l} onClick={() => setLang(l)} style={{ padding: "4px 9px", border: 0, borderRadius: 999, cursor: "pointer", background: lang === l ? "var(--fg)" : "transparent", color: lang === l ? "var(--bg)" : "var(--muted)", fontFamily: "inherit", fontSize: "inherit", textTransform: "uppercase", letterSpacing: "0.08em" }}>{l}</button>
+              ))}
+            </div>
+            <a href="#contact" style={{ background: "var(--fg)", color: "var(--bg)", padding: "10px 18px", borderRadius: 999, textDecoration: "none", fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 500 }}>{t.nav.cta} →</a>
+          </nav>
+          {/* Mobile: lang + hamburger */}
+          <div className="nav-mobile-controls" style={{ display: "none", alignItems: "center", gap: 12 }}>
+            <div style={{ display: "flex", gap: 2, fontFamily: "var(--font-mono)", fontSize: 10, border: "1px solid var(--rule)", borderRadius: 999, padding: 2 }}>
+              {(["fr", "en"] as const).map(l => (
+                <button key={l} onClick={() => setLang(l)} style={{ padding: "3px 7px", border: 0, borderRadius: 999, cursor: "pointer", background: lang === l ? "var(--fg)" : "transparent", color: lang === l ? "var(--bg)" : "var(--muted)", fontFamily: "inherit", fontSize: "inherit", textTransform: "uppercase", letterSpacing: "0.08em" }}>{l}</button>
+              ))}
+            </div>
+            <button onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu" style={{ background: "transparent", border: 0, cursor: "pointer", padding: 8, color: "var(--fg)" }}>
+              {menuOpen ? (
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="4" y1="4" x2="18" y2="18" /><line x1="18" y1="4" x2="4" y2="18" /></svg>
+              ) : (
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="3" y1="6" x2="19" y2="6" /><line x1="3" y1="11" x2="19" y2="11" /><line x1="3" y1="16" x2="19" y2="16" /></svg>
+              )}
+            </button>
           </div>
-          <a href="#contact" style={{ background: "var(--fg)", color: "var(--bg)", padding: "10px 18px", borderRadius: 999, textDecoration: "none", fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 500 }}>{t.nav.cta} →</a>
+        </div>
+      </header>
+
+      {/* Mobile fullscreen menu */}
+      <div className="mobile-menu" style={{ position: "fixed", inset: 0, zIndex: 39, background: "var(--bg)", display: "flex", flexDirection: "column", justifyContent: "center", padding: "80px var(--pad-x) 40px", opacity: menuOpen ? 1 : 0, pointerEvents: menuOpen ? "auto" : "none", transition: "opacity .3s ease" }}>
+        <nav style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+          <a href="#services" style={mobileLink} onClick={() => setMenuOpen(false)}>{t.nav.services}</a>
+          <a href="#process" style={mobileLink} onClick={() => setMenuOpen(false)}>{t.nav.process}</a>
+          <a href="#results" style={mobileLink} onClick={() => setMenuOpen(false)}>{t.nav.work}</a>
+          <a href="#franchise" style={mobileLink} onClick={() => setMenuOpen(false)}>{t.nav.franchise}</a>
+          <a href="#journal" style={mobileLink} onClick={() => setMenuOpen(false)}>{t.nav.journal}</a>
+          <a href="#contact" style={mobileLink} onClick={() => setMenuOpen(false)}>{t.nav.contact}</a>
         </nav>
+        <div style={{ marginTop: 40, paddingTop: 24, borderTop: "1px solid var(--rule)" }}>
+          <a href="#contact" onClick={() => setMenuOpen(false)} style={{ display: "block", background: "var(--fg)", color: "var(--bg)", padding: "16px 28px", borderRadius: 999, textDecoration: "none", fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: 500, textAlign: "center" }}>{t.nav.cta} →</a>
+        </div>
+        <div style={{ marginTop: 24, fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--muted)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Scalify Labs · Digital Growth Agency</div>
       </div>
-    </header>
+    </>
   );
 }
 
@@ -974,117 +1014,116 @@ export default function Home() {
         /* ── TABLET ── */
         @media (max-width: 960px) {
           :root { --pad-x: 24px; }
-          .nav-link { display: none !important; }
-          .nav-lang { display: none !important; }
+          .nav-desktop { display: none !important; }
+          .nav-mobile-controls { display: flex !important; }
           .services-grid { grid-template-columns: 1fr !important; }
           .results-grid { grid-template-columns: repeat(2, 1fr) !important; }
           .franchise-pillars { grid-template-columns: repeat(2, 1fr) !important; }
+          .section-header-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
         }
 
         /* ── MOBILE ── */
         @media (max-width: 768px) {
           :root { --pad-x: 16px; --pad: 10px; }
 
-          /* Nav */
-          .nav-cta-text { display: none; }
-
           /* Hero */
-          .hero-split { grid-template-columns: 1fr !important; gap: 32px !important; }
-          .hero-section { min-height: 85vh !important; padding-top: 100px !important; padding-bottom: 40px !important; }
+          .hero-section { min-height: auto !important; padding-top: 100px !important; padding-bottom: 32px !important; }
+          .hero-section h1 { font-size: clamp(32px, 9vw, 48px) !important; word-break: break-word; }
           .hero-corner { display: none !important; }
-          .hero-eyebrow-row { flex-direction: column !important; align-items: flex-start !important; gap: 8px !important; }
+          .hero-split { grid-template-columns: 1fr !important; gap: 24px !important; }
           .hero-cta-row { flex-direction: column !important; gap: 10px !important; }
-          .hero-cta-row a { width: 100%; text-align: center; justify-content: center; }
-          .hero-ornament { margin: 28px auto 0 !important; }
+          .hero-cta-row a { width: 100% !important; text-align: center !important; display: flex !important; justify-content: center !important; padding: 14px 20px !important; }
+          .hero-ornament { margin: 24px auto 0 !important; }
           .hero-ornament span:first-child,
-          .hero-ornament span:last-child { width: 40px !important; }
+          .hero-ornament span:last-child { width: 32px !important; }
 
           /* Metrics */
           .metrics-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 0 !important; }
-          .metrics-grid > div { border-right: none !important; padding: 20px 16px !important; }
-
-          /* Section headers */
-          .section-header-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
-          .section-header-grid > p { font-size: 14px !important; }
+          .metrics-grid > div { border-right: none !important; padding: 18px 12px !important; }
+          .metrics-grid > div > div:first-child { font-size: clamp(28px, 8vw, 56px) !important; }
 
           /* Services */
-          .services-grid { grid-template-columns: 1fr !important; }
-          .services-grid > article { min-height: auto !important; padding: 24px 20px 20px !important; }
+          .services-grid > article { min-height: auto !important; padding: 22px 18px 18px !important; }
 
           /* Anatomy */
-          .anatomy-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+          .anatomy-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
           .anatomy-grid > div:last-child { position: static !important; }
-          .anatomy-layer { padding: 16px 20px !important; }
 
           /* Process */
           .process-timeline-line { display: none !important; }
-          .process-step { grid-template-columns: 1fr !important; gap: 12px !important; padding: 24px 0 !important; }
-          .process-step > div:first-child { display: flex; align-items: center; gap: 16px; }
-          .process-step > div:nth-child(2) { display: none; }
-          .process-step > div:nth-child(3) { grid-column: 1; }
-          .process-step > div:nth-child(4) { grid-column: 1; margin-top: 8px; }
+          .process-step { grid-template-columns: 48px 1fr !important; gap: 12px !important; padding: 20px 0 !important; }
+          .process-step > div:nth-child(2) { grid-column: 1 / -1; }
+          .process-step > div:nth-child(3) { grid-column: 1 / -1; font-size: 14px !important; }
+          .process-step > div:nth-child(4) { grid-column: 1 / -1; }
 
           /* Results */
           .results-grid { grid-template-columns: 1fr !important; }
-          .results-grid > article { min-height: auto !important; padding: 28px 20px 24px !important; }
+          .results-grid > article { min-height: auto !important; padding: 24px 18px !important; }
 
           /* Franchise */
           .franchise-pillars { grid-template-columns: 1fr !important; }
-          .network-header { grid-template-columns: 1fr !important; gap: 16px !important; }
+          .network-header { grid-template-columns: 1fr !important; gap: 14px !important; }
           .network-header > p { border-left: none !important; padding-left: 0 !important; }
-          .network-row { grid-template-columns: 1fr !important; gap: 4px !important; padding: 16px 0 !important; }
+          .network-row { grid-template-columns: 1fr 1fr !important; gap: 4px 12px !important; padding: 14px 0 !important; }
 
           /* Journal */
           .journal-grid { grid-template-columns: 1fr !important; }
-          .journal-grid > a { min-height: auto !important; padding: 20px !important; }
+          .journal-grid > a { min-height: auto !important; padding: 18px !important; }
 
           /* FAQ */
-          .faq-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+          .faq-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
           .faq-grid > div:first-child { position: static !important; }
-          .faq-grid button { min-height: 52px; font-size: 18px !important; }
+          .faq-grid button { min-height: 52px; }
+          .faq-grid button > span:first-child { font-size: 18px !important; }
 
           /* Before/After */
-          .ba-header { grid-template-columns: 1fr !important; gap: 16px !important; }
-          .ba-row { grid-template-columns: 1fr !important; gap: 0 !important; padding: 16px !important; }
-          .ba-row > div { padding: 12px 0 !important; border-left: none !important; border-bottom: 1px solid color-mix(in oklab, var(--bg), transparent 85%); }
-          .ba-row > div:last-child { border-bottom: none; }
+          .ba-header { grid-template-columns: 1fr !important; gap: 14px !important; }
+          .ba-row { grid-template-columns: 1fr !important; gap: 0 !important; padding: 14px 16px !important; }
+          .ba-row > div { padding: 10px 0 !important; border-left: none !important; }
 
           /* Contact */
-          .contact-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
-          .form-field { grid-template-columns: 1fr !important; gap: 6px !important; padding: 12px 16px !important; }
+          .contact-grid { grid-template-columns: 1fr !important; gap: 28px !important; }
+          .form-field { grid-template-columns: 1fr !important; gap: 4px !important; padding: 12px 14px !important; }
           .form-field > span { padding-top: 0 !important; font-size: 10px !important; }
 
           /* Footer */
-          .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 28px !important; }
-          .footer-bottom { flex-direction: column !important; gap: 8px !important; text-align: center !important; }
+          .footer-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+          .footer-bottom { flex-direction: column !important; gap: 6px !important; text-align: center !important; margin-top: 32px !important; }
 
           /* Modals */
-          .modal-overlay { padding: 12px !important; align-items: flex-start !important; }
+          .modal-overlay { padding: 8px !important; align-items: flex-start !important; }
           .modal-overlay > article,
-          .modal-overlay > div { border-radius: 14px !important; padding: 24px 18px 28px !important; max-height: 94vh !important; overflow-y: auto !important; }
-          .modal-overlay h1 { font-size: 24px !important; }
-
-          /* Legal modals */
+          .modal-overlay > div { border-radius: 12px !important; padding: 20px 16px 24px !important; max-height: 95vh !important; overflow-y: auto !important; }
+          .modal-overlay h1 { font-size: 22px !important; }
           .legal-modal-inner { max-height: 96vh !important; }
-          .legal-modal-header { padding: 18px !important; }
-          .legal-modal-header > div > div:last-child { font-size: 22px !important; }
-          .legal-modal-body { padding: 20px 18px !important; }
+          .legal-modal-header { padding: 16px !important; }
+          .legal-modal-body { padding: 16px !important; }
 
           /* Tweaks */
-          .tweaks-panel { left: 12px !important; right: 12px !important; width: auto !important; bottom: 12px !important; max-height: 70vh !important; overflow-y: auto !important; }
+          .tweaks-panel { left: 8px !important; right: 8px !important; width: auto !important; bottom: 8px !important; max-height: 65vh !important; overflow-y: auto !important; }
 
-          /* Global touch targets */
-          button, a[href] { min-height: 44px; }
+          /* Section padding */
+          section { padding-top: 40px !important; padding-bottom: 40px !important; }
 
-          /* Section padding reduction */
-          section { padding-top: calc(var(--pad) * 3) !important; padding-bottom: calc(var(--pad) * 3) !important; }
+          /* Mobile menu — hidden on desktop */
+          .mobile-menu { display: none; }
         }
 
-        /* ── SMALL MOBILE (iPhone SE etc) ── */
+        /* Show mobile menu only on tablet/mobile when activated */
+        @media (max-width: 960px) {
+          .mobile-menu { display: flex !important; }
+        }
+        @media (min-width: 961px) {
+          .mobile-menu { display: none !important; }
+          .nav-mobile-controls { display: none !important; }
+        }
+
+        /* ── SMALL MOBILE ── */
         @media (max-width: 400px) {
-          :root { --pad-x: 14px; }
-          .footer-grid { grid-template-columns: 1fr !important; }
+          :root { --pad-x: 12px; }
+          .hero-section h1 { font-size: 28px !important; }
           .metrics-grid { grid-template-columns: 1fr !important; }
+          .network-row { grid-template-columns: 1fr !important; }
         }
       `}</style>
 
