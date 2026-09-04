@@ -1,0 +1,89 @@
+/* ---- « Résultats » — défilement horizontal pinné (esprit Work), chiffres ---- */
+.proof--h {
+  height: 100vh; position: relative; overflow: hidden;
+  background: var(--cream); color: var(--cream-fg);
+  --muted: color-mix(in oklab, var(--cream-fg), transparent 42%);
+  --rule: color-mix(in oklab, var(--cream-fg), transparent 82%);
+}
+
+/* Fond « RENTABLE + symboles » — diagonal, outline (distinct de Work) */
+.proof__bg {
+  position: absolute; top: 0; left: 0; z-index: 0; height: 100%;
+  width: max-content; display: flex; align-items: center; pointer-events: none; will-change: transform;
+}
+.proof__bg-inner { transform: rotate(-5deg); display: flex; flex-direction: column; gap: 0.6vh; }
+.proof__bg-word {
+  font-family: 'Anton', sans-serif; font-size: 25vh; line-height: 0.84; white-space: nowrap;
+  color: var(--accent); opacity: 0.09;
+}
+.proof__bg-word.out { /* version contour */
+  color: transparent; -webkit-text-stroke: 2px var(--accent); opacity: 0.16;
+  padding-left: 10vw;
+}
+.proof__bg-sym {
+  font-family: 'Anton', sans-serif; font-size: 17vh; line-height: 1; white-space: nowrap;
+  color: transparent; -webkit-text-stroke: 1.5px color-mix(in oklab, var(--cream-fg), transparent 55%);
+  opacity: 0.5; letter-spacing: 0.04em; padding-left: 4vw;
+}
+.proof__bg-sym.alt { color: var(--accent); -webkit-text-stroke: 0; opacity: 0.1; padding-left: 14vw; }
+
+.proof__viewport { position: relative; z-index: 2; height: 100%; overflow: hidden; display: flex; align-items: center; }
+.proof__track {
+  display: flex; align-items: center; height: 100%; gap: clamp(48px, 8vw, 150px);
+  padding: 0 clamp(24px, 6vw, 120px); width: max-content; will-change: transform;
+}
+
+/* Panneau intro */
+.proof__intro { flex: 0 0 auto; width: min(40vw, 500px); }
+.proof__title { font-size: clamp(40px, 5vw, 84px); margin-top: 20px; line-height: 0.98; }
+.proof__introsub { margin-top: 22px; font-size: clamp(15px, 1.3vw, 18px); color: var(--muted); max-width: 34ch; }
+
+/* Panneau chiffre */
+.proof__panel {
+  flex: 0 0 auto; position: relative; height: 100%;
+  display: flex; flex-direction: column; justify-content: center;
+  min-width: min(58vw, 720px); padding-left: clamp(10px, 2vw, 40px);
+}
+.proof__ghost {
+  position: absolute; z-index: 0; top: 50%; left: -2vw; transform: translateY(-54%);
+  font-family: 'Anton', sans-serif; font-size: 60vh; line-height: 1; color: var(--accent);
+  opacity: 0.05; pointer-events: none;
+}
+.proof__idx { position: relative; z-index: 1; font-size: 13px; letter-spacing: 0.16em; color: var(--accent); margin-bottom: clamp(14px, 2.4vh, 26px); }
+.proof__num {
+  position: relative; z-index: 1;
+  font-size: clamp(92px, 16.5vw, 250px); line-height: 0.82; letter-spacing: -0.045em;
+  color: var(--cream-fg); font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.proof__panel.is-hi .proof__num { color: var(--accent); }
+.proof__label {
+  position: relative; z-index: 1; margin-top: clamp(20px, 3.2vh, 36px);
+  font-size: clamp(16px, 1.5vw, 21px); line-height: 1.4; max-width: 24ch; color: var(--muted);
+}
+.proof__metaline {
+  position: relative; z-index: 1; margin-top: 16px; display: inline-flex; align-items: center; gap: 9px;
+  font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+}
+.proof__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+.proof__panel.is-hi .proof__metaline { color: color-mix(in oklab, var(--accent), var(--cream-fg) 30%); }
+
+/* Panneau final */
+.proof__outro {
+  flex: 0 0 auto; align-self: center; width: min(64vw, 440px);
+  display: flex; flex-direction: column; gap: 28px; padding-left: clamp(10px, 2vw, 30px);
+}
+.proof__outro p { font-size: clamp(32px, 3.6vw, 58px); line-height: 1.0; }
+.proof__outro .btn { align-self: flex-start; }
+
+/* Rail de progression horizontal */
+.proof__railwrap { position: absolute; left: 0; bottom: 0; z-index: 3; width: 100%; height: 3px; background: var(--rule); }
+.proof__rail { display: block; height: 100%; width: 100%; transform-origin: left; transform: scaleX(0); background: var(--accent); }
+
+@media (max-width: 640px) {
+  .proof__bg-line { font-size: 20vh; }
+  .proof__intro { width: 82vw; }
+  .proof__title { font-size: clamp(38px, 12vw, 60px); }
+  .proof__panel { min-width: 84vw; }
+  .proof__num { font-size: clamp(76px, 26vw, 150px); }
+  .proof__outro { width: 82vw; }
+}

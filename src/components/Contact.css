@@ -1,0 +1,35 @@
+.contact__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 110px); align-items: start; }
+.contact__title { font-size: clamp(40px, 5vw, 82px); margin: 22px 0 0; line-height: 0.98; }
+.contact__sub { font-size: 17px; line-height: 1.6; opacity: 0.78; max-width: 42ch; margin-top: 26px; }
+.contact__bullets { list-style: none; margin-top: 38px; display: flex; flex-direction: column; gap: 14px; }
+.contact__bullets li { display: flex; align-items: center; gap: 12px; font-size: 15.5px; opacity: 0.9; }
+.contact__check {
+  width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+  background: color-mix(in oklab, var(--accent), transparent 84%);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+
+.contact__form {
+  background: color-mix(in oklab, var(--bg), var(--cream-fg) 3%);
+  border: 1px solid var(--rule); border-radius: 22px; padding: clamp(24px, 3vw, 36px);
+  display: flex; flex-direction: column; gap: 16px;
+}
+.contact__row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.field {
+  display: block; background: var(--bg); border: 1px solid var(--rule); border-radius: 12px;
+  padding: 12px 18px; transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+.field:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent), transparent 84%); }
+.field span { display: block; font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.55; margin-bottom: 5px; }
+.field input, .field textarea {
+  width: 100%; background: transparent; border: 0; outline: none; resize: none;
+  font-family: var(--font-sans); font-size: 16px; color: var(--fg); caret-color: var(--accent);
+}
+.contact__submit { align-self: flex-start; margin-top: 4px; }
+
+.contact__sent { padding: 44px 8px; }
+.contact__sent-t { font-size: clamp(32px, 4vw, 52px); }
+.contact__sent p { margin-top: 16px; font-size: 16px; opacity: 0.72; }
+
+@media (max-width: 860px) { .contact__grid { grid-template-columns: 1fr; } }
+@media (max-width: 480px) { .contact__row2 { grid-template-columns: 1fr; } }

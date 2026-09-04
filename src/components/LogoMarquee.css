@@ -1,0 +1,8 @@
+.logomarq { overflow: hidden; width: 100%; -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
+.logomarq__track { display: flex; align-items: center; gap: clamp(36px, 5vw, 80px); width: max-content; animation: logomarq 34s linear infinite; }
+.logomarq__track.is-rev { animation-direction: reverse; }
+.logomarq:hover .logomarq__track { animation-play-state: paused; }
+@keyframes logomarq { to { transform: translateX(-50%); } }
+.logomarq__item { display: inline-flex; align-items: center; gap: 12px; color: var(--fg); opacity: 0.6; transition: opacity 0.3s var(--ease), color 0.3s var(--ease); }
+.logomarq__item:hover { opacity: 1; color: var(--accent); }
+.logomarq__name { font-family: var(--font-mono); font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap; }

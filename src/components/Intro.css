@@ -1,0 +1,77 @@
+.intro {
+  position: relative; overflow: hidden;
+  background: var(--bg); color: var(--fg);
+  padding: 0; min-height: 96vh;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.mesh-canvas canvas { width: 100%; height: 100%; display: block; }
+.intro__veil {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(46% 52% at 50% 46%, var(--bg) 26%, color-mix(in oklab, var(--bg), transparent 40%) 62%, transparent 82%);
+}
+
+/* Bandeaux binaires */
+.ticker {
+  position: relative; z-index: 3; overflow: hidden; width: 100%;
+  border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  padding: 7px 0; background: color-mix(in oklab, var(--bg), transparent 30%);
+}
+.ticker__track { display: flex; width: max-content; white-space: nowrap; animation: tickmarq 30s linear infinite; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; }
+.ticker__track.is-rev { animation-direction: reverse; }
+@keyframes tickmarq { to { transform: translateX(-50%); } }
+.ticker__bits { color: var(--fg); opacity: 0.55; }
+.ticker__slash { color: var(--accent); opacity: 0.5; }
+.intro__ticker--top { position: absolute; top: 0; left: 0; }
+.intro__ticker--bottom { position: absolute; bottom: 0; left: 0; }
+
+/* Bande logos plateformes (remplace les tickers) */
+.intro__logos {
+  position: absolute; left: 0; width: 100%; z-index: 3; padding: 17px 0;
+  border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  background: color-mix(in oklab, var(--bg), transparent 35%); backdrop-filter: blur(6px);
+}
+.intro__logos--top { top: 0; }
+.intro__logos--bottom { bottom: 0; }
+
+/* Panneau présentation */
+.intro__inner { position: relative; z-index: 2; text-align: center; padding: 100px var(--pad-x); }
+.intro__label {
+  display: inline-flex; align-items: center; gap: 10px; margin-bottom: 34px;
+  font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.24em; color: var(--accent);
+}
+.intro__label-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pulse 2.2s ease-in-out infinite; }
+.intro__statement {
+  max-width: min(92vw, 900px); margin: 0 auto;
+  font-family: var(--font-display); font-size: clamp(26px, 3.6vw, 52px);
+  line-height: 1.24; letter-spacing: -0.01em; will-change: transform, opacity;
+}
+.intro__scramble {
+  font-family: var(--font-mono); font-size: 0.78em; font-weight: 500;
+  letter-spacing: -0.02em; white-space: nowrap;
+}
+.intro__ul { position: relative; white-space: nowrap; }
+.intro__ul::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -0.04em; height: 2px;
+  background: var(--accent); transform: scaleX(0); transform-origin: left;
+}
+.intro.is-in .intro__ul::after { animation: introdraw 0.8s var(--ease) 0.55s forwards; }
+@keyframes introdraw { to { transform: scaleX(1); } }
+
+/* Typo géante cinétique */
+.intro__bigtype { position: relative; z-index: 2; overflow: hidden; margin-top: auto; padding: 10px 0; }
+.intro__bigtype-track { display: flex; width: max-content; white-space: nowrap; will-change: transform; animation: introbig 26s linear infinite; }
+.intro__bigtype:hover .intro__bigtype-track { animation-play-state: paused; }
+@keyframes introbig { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .intro__bigtype-track { animation: none; } }
+.intro__bigword {
+  font-family: 'Anton', sans-serif; font-size: clamp(60px, 13vw, 200px); line-height: 0.9;
+  color: var(--fg); display: inline-flex; align-items: center; text-transform: uppercase;
+}
+.intro__star { color: var(--accent); font-family: var(--font-display); font-size: 0.35em; margin: 0 0.35em; }
+
+@media (max-width: 600px) {
+  .intro__inner { padding: 80px var(--pad-x); }
+  .intro__statement { max-width: 100%; }
+  .intro__bigword { font-size: clamp(84px, 25vw, 150px); }
+  .intro__bigtype { padding-bottom: 30px; }
+}

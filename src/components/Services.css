@@ -1,0 +1,107 @@
+.svc--cine { position: relative; background: var(--bg); color: var(--fg); }
+
+/* Scène pinnée plein écran */
+.svc__stage { position: relative; height: 100vh; overflow: hidden; }
+.svc__bg { position: absolute; inset: 0; z-index: 0; }
+.svc__bgvid { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.8s var(--ease); }
+.svc__bgvid.is-on { opacity: 0.55; }
+.svc__veil {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg, var(--bg) 6%, color-mix(in oklab, var(--bg), transparent 22%) 46%, color-mix(in oklab, var(--bg), transparent 58%)),
+    linear-gradient(0deg, var(--bg), transparent 42%);
+}
+
+.svc__top {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 3;
+  padding: clamp(84px, 11vh, 116px) var(--pad-x) 0;
+  display: flex; justify-content: space-between; align-items: baseline; gap: 20px;
+}
+.svc__toptitle { font-size: clamp(16px, 1.5vw, 22px); opacity: 0.6; }
+
+/* Panneaux (un levier à la fois) */
+.svc__panels { position: absolute; inset: 0; z-index: 2; }
+.svc__panel {
+  position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center;
+  padding: 0 var(--pad-x); opacity: 0; transform: translateY(5%); pointer-events: none;
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.svc__panel.is-active { opacity: 1; transform: none; }
+.svc__panel.is-prev { opacity: 0; transform: translateY(-5%); }
+
+.svc__ghost {
+  position: absolute; right: 1vw; top: 50%; transform: translateY(-50%); z-index: -1;
+  font-family: 'Anton', sans-serif; font-size: 62vh; line-height: 1; color: var(--accent); opacity: 0.05; pointer-events: none;
+}
+.svc__idx { font-size: 13px; letter-spacing: 0.16em; color: var(--accent); margin-bottom: clamp(12px, 2vh, 22px); }
+.svc__name { font-size: clamp(50px, 9.4vw, 172px); line-height: 0.9; letter-spacing: -0.035em; max-width: 15ch; }
+.svc__panel.is-active .svc__name { animation: svcname 0.8s var(--ease); }
+@keyframes svcname { from { opacity: 0; transform: translateY(0.14em); } to { opacity: 1; transform: none; } }
+.svc__desc { margin-top: clamp(18px, 3vh, 30px); font-size: clamp(15px, 1.4vw, 20px); line-height: 1.55; opacity: 0.82; max-width: 52ch; }
+.svc__tags { display: flex; flex-wrap: wrap; gap: 9px; margin-top: clamp(18px, 3vh, 28px); }
+.svc__tag {
+  display: inline-flex; align-items: center; gap: 7px; padding: 8px 13px; border-radius: 999px;
+  border: 1px solid var(--rule); background: color-mix(in oklab, var(--fg), transparent 92%);
+  font-size: 12px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.04em;
+}
+
+.svc__railwrap { position: absolute; left: 0; bottom: 0; z-index: 3; width: 100%; height: 3px; background: var(--rule); }
+.svc__rail { display: block; height: 100%; width: 100%; transform-origin: left; transform: scaleX(0); background: var(--accent); }
+
+/* Bandeau CTA — sombre éditorial, mot géant en fond (esprit Work/Proof) */
+.svc__cta {
+  position: relative; overflow: hidden; background: var(--bg);
+  padding: clamp(66px, 11vh, 130px) 0; border-top: 1px solid var(--rule);
+}
+.svc__cta::before {
+  content: ''; position: absolute; left: 0; right: 0; top: -1px; height: 2px; z-index: 2;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent); opacity: 0.5;
+}
+.svc__cta-bg { position: absolute; inset: 0; z-index: 0; display: flex; align-items: center; pointer-events: none; }
+.svc__cta-bgtrack { display: flex; white-space: nowrap; width: max-content; animation: ctaword 42s linear infinite; }
+.svc__cta-word { font-family: 'Anton', sans-serif; font-size: clamp(90px, 21vh, 230px); line-height: 1; color: var(--accent); opacity: 0.06; letter-spacing: 0.01em; }
+@keyframes ctaword { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+.svc__cta-inner { position: relative; z-index: 1; }
+.svc__cta-head {
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; flex-wrap: wrap;
+  margin-bottom: clamp(30px, 5vh, 52px);
+}
+.svc__cta-l { max-width: 640px; }
+.svc__cta-title { font-size: clamp(28px, 3.4vw, 54px); line-height: 1.04; margin-top: 16px; }
+.svc__cta-btn .btn__arrow { transition: transform 0.25s var(--ease); }
+.svc__cta-btn:hover .btn__arrow { transform: translateX(5px); }
+
+/* Cartes services complémentaires mises en avant */
+.svc__svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(14px, 1.6vw, 22px); }
+.svc__svc-card {
+  display: flex; align-items: center; gap: 16px; padding: clamp(20px, 2vw, 28px); border-radius: 16px;
+  border: 1px solid var(--rule); background: color-mix(in oklab, var(--fg), transparent 95%);
+  transition: transform 0.3s var(--ease), border-color 0.3s var(--ease), background 0.3s var(--ease);
+}
+.svc__svc-card:hover {
+  transform: translateY(-4px); border-color: color-mix(in oklab, var(--accent), transparent 38%);
+  background: color-mix(in oklab, var(--accent), transparent 92%);
+}
+.svc__svc-ic {
+  flex: 0 0 auto; width: 48px; height: 48px; border-radius: 13px; display: flex; align-items: center; justify-content: center;
+  background: color-mix(in oklab, var(--accent), transparent 85%); color: var(--accent);
+  transition: background 0.3s var(--ease);
+}
+.svc__svc-card:hover .svc__svc-ic { background: color-mix(in oklab, var(--accent), transparent 74%); }
+.svc__svc-ic svg { width: 21px; height: 21px; }
+.svc__svc-txt { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0; }
+.svc__svc-name { font-size: clamp(16px, 1.4vw, 19px); font-weight: 600; letter-spacing: -0.01em; }
+.svc__svc-desc { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.svc__svc-arrow { flex: 0 0 auto; color: var(--accent); font-size: 18px; opacity: 0; transform: translateX(-6px); transition: opacity 0.3s var(--ease), transform 0.3s var(--ease); }
+.svc__svc-card:hover .svc__svc-arrow { opacity: 1; transform: none; }
+
+@media (max-width: 860px) {
+  .svc__top { flex-direction: column; gap: 8px; padding-top: clamp(76px, 10vh, 100px); }
+  .svc__toptitle { font-size: 15px; }
+  .svc__name { font-size: clamp(46px, 13vw, 92px); max-width: 100%; }
+  .svc__ghost { font-size: 40vh; opacity: 0.045; }
+  .svc__desc { font-size: 15px; max-width: 90%; }
+  .svc__cta-head { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .svc__svc-grid { grid-template-columns: 1fr; }
+}

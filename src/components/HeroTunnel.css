@@ -1,0 +1,53 @@
+.htun {
+  position: relative; min-height: 100svh; overflow: hidden;
+  background: radial-gradient(120% 90% at 50% 34%, #241708 0%, #140d06 45%, #0c0804 100%);
+  display: flex; flex-direction: column;
+}
+.htun__glow {
+  position: absolute; left: 50%; top: 34%; transform: translate(-50%, -50%);
+  width: 60vw; height: 60vw; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, color-mix(in oklab, var(--accent), transparent 55%), transparent 62%);
+  filter: blur(30px); opacity: 0.6;
+}
+.htun__rays { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; }
+
+/* Scène perspective */
+.htun__stage {
+  position: absolute; inset: 0; z-index: 2;
+  perspective: 900px; perspective-origin: 50% 38%;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none; overflow: hidden;
+}
+.htun__tilt { transform: rotateX(40deg); transform-style: preserve-3d; }
+.htun__plane {
+  transform: translateY(calc(var(--ty, 0) * 1px)); transform-style: preserve-3d;
+  text-align: center;
+}
+.htun__line {
+  font-family: 'Anton', sans-serif; text-transform: uppercase;
+  font-size: clamp(56px, 11vw, 150px); line-height: 0.94; letter-spacing: 0.01em;
+  color: #efe4d1; will-change: transform, opacity;
+  text-shadow: 0 6px 30px rgba(0,0,0,0.5);
+}
+.htun__line.accent { color: var(--accent); }
+
+/* Voile pour la lisibilité du bas */
+.htun__veil {
+  position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  background: linear-gradient(to bottom, transparent 55%, #0c0804 96%);
+}
+
+.htun__bottom {
+  position: relative; z-index: 4; margin-top: auto;
+  display: flex; flex-direction: column; align-items: center; gap: 30px;
+  padding: 0 var(--pad-x) clamp(48px, 8vh, 90px); text-align: center;
+}
+.htun__cta { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+.htun__avail { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.16em; color: var(--muted); }
+
+@media (max-width: 640px) {
+  .htun__stage { top: 0; bottom: auto; height: 60vh; perspective: 680px; perspective-origin: 50% 58%; align-items: flex-end; }
+  .htun__tilt { transform: rotateX(30deg); }
+  .htun__line { font-size: clamp(44px, 13.5vw, 84px); line-height: 0.98; }
+  .htun__bottom { padding-bottom: clamp(56px, 10vh, 84px); }
+}

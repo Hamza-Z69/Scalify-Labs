@@ -1,0 +1,67 @@
+.work {
+  position: relative; height: 100vh; overflow: hidden;
+  background: #080503; color: var(--fg);
+  background-image: radial-gradient(color-mix(in oklab, var(--accent), transparent 84%) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+:root[data-theme='light'] .work { background-color: #120c06; color: #efe4d1; }
+
+/* Fond « WORK » géant (parallaxe horizontale) */
+.work__bg {
+  position: absolute; top: 50%; left: 0; z-index: 0; transform: translateY(-50%);
+  width: max-content; display: flex; flex-direction: column; gap: 0.5vh; pointer-events: none; will-change: transform;
+}
+.work__bg-line {
+  font-family: 'Anton', sans-serif; font-size: 30vh; line-height: 0.86; letter-spacing: 0.02em; white-space: nowrap;
+  color: var(--accent); opacity: 0.16; text-shadow: 6px 8px 0 rgba(0,0,0,0.5);
+}
+.work__bg-line:nth-child(2) { opacity: 0.22; padding-left: 8vw; }
+
+/* Piste horizontale déplacée par le scroll */
+.work__viewport { position: relative; z-index: 2; height: 100%; overflow: hidden; }
+.work__track {
+  display: flex; align-items: center; height: 100%; gap: clamp(24px, 3vw, 56px);
+  width: max-content; padding: 0 var(--pad-x); will-change: transform;
+}
+
+/* Panneau titre (première dalle horizontale) */
+.work__intro {
+  flex: 0 0 auto; width: min(46vw, 620px); align-self: center;
+  display: flex; flex-direction: column; padding-right: clamp(20px, 3vw, 60px);
+}
+.work__title { font-size: clamp(40px, 6vw, 100px); margin-top: 22px; line-height: 0.98; }
+.work__sub { margin-top: 22px; font-size: clamp(15px, 1.3vw, 19px); opacity: 0.74; max-width: 40ch; }
+
+.work__card { flex: 0 0 auto; width: clamp(300px, 46vw, 560px); position: relative; }
+.work__card--portrait { width: clamp(220px, 30vw, 320px); }
+.work__card--portrait .work__media { aspect-ratio: 9 / 16; }
+.work__index { position: absolute; top: -30px; left: 2px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.2em; color: var(--accent); }
+.work__media {
+  position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 16px;
+  border: 1px solid var(--rule); background: #000; box-shadow: 0 40px 90px -40px rgba(0,0,0,0.8);
+}
+.work__media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.work__media::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to top, rgba(8,5,3,0.5), transparent 45%); }
+.work__scan { position: absolute; inset: 0; pointer-events: none; opacity: 0.4; mix-blend-mode: overlay; background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0,0,0,0.18) 2px 3px); }
+.work__meta { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-top: 16px; font-family: var(--font-mono); font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.12em; }
+.work__meta-l { display: flex; flex-direction: column; gap: 6px; }
+.work__label { font-family: var(--font-display); font-size: 24px; text-transform: none; letter-spacing: -0.01em; }
+.work__tag { color: var(--fg); opacity: 0.55; }
+.work__code { color: var(--accent); flex-shrink: 0; }
+
+/* Panneau final */
+.work__outro {
+  flex: 0 0 auto; width: min(70vw, 420px); align-self: center;
+  display: flex; flex-direction: column; gap: 26px; padding-left: clamp(10px, 2vw, 30px);
+}
+.work__outro p { font-size: clamp(30px, 3.4vw, 54px); line-height: 1.02; }
+.work__outro .btn { align-self: flex-start; }
+
+@media (max-width: 640px) {
+  .work__bg-line { font-size: 22vh; }
+  .work__intro { width: 84vw; }
+  .work__title { font-size: clamp(38px, 12vw, 64px); }
+  .work__card { width: 80vw; }
+  .work__card--portrait { width: 54vw; }
+  .work__outro { width: 82vw; }
+}
